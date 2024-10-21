@@ -1,0 +1,64 @@
+import java.util.*;
+
+class Room {
+    String type;
+    double price;
+    boolean isAvailable;
+    
+    public Room(String type, double price) {
+        this.type = type;
+        this.price = price;
+        this.isAvailable = true;
+    }
+    
+    public void bookRoom() {
+        if (isAvailable) {
+            isAvailable = false;
+            System.out.println(type + " room booked successfully.");
+        } else {
+            System.out.println(type + " room is not available.");
+        }
+    }
+    
+    public void showDetails() {
+        System.out.println(type + " room | Price: RS" + price + " | Available: " + isAvailable);
+    }
+}
+
+class Reservation {
+    Room room;
+    String customerName;
+    
+    public Reservation(Room room, String customerName) {
+        this.room = room;
+        this.customerName = customerName;
+        room.bookRoom();
+    }
+    
+    public void showReservation() {
+        System.out.println("Reservation for " + customerName + " | Room: " + room.type);
+    }
+}
+
+public class HotelReservationSystem {
+    public static void main(String[] args) {
+        Room single = new Room("Single", 100);
+        Room doubleRoom = new Room("Double", 200);
+        
+        Scanner scanner = new Scanner(System.in);
+        single.showDetails();
+        doubleRoom.showDetails();
+        
+        System.out.println("Enter your name: ");
+        String name = scanner.nextLine();
+        
+        System.out.println("Which room do you want to book? (Single/Double): ");
+        String choice = scanner.nextLine();
+        
+        if (choice.equalsIgnoreCase("Single")) {
+            new Reservation(single, name);
+        } else if (choice.equalsIgnoreCase("Double")) {
+            new Reservation(doubleRoom, name);
+        }
+    }
+}
